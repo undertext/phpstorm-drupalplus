@@ -3,8 +3,10 @@ package org.drupal.settings;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
+import com.intellij.openapi.progress.util.DispatchThreadProgressWindow;
 import com.intellij.openapi.project.Project;
 import org.drupal.bundle.DrupalPlusBundle;
+import org.drupal.config.DrupalPlusConfiguration;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,6 +62,17 @@ public class DrupalSettings implements Configurable {
 
     @Override
     public void apply() throws ConfigurationException {
+
+        boolean coreLevel=false;
+        boolean contribLevel=false;
+        boolean customLevel=false;
+
+        final DrupalPlusConfiguration configuration = DrupalPlusConfiguration.getInstance(project);
+        configuration.DRUPAL_VERSION=(String)cbDrupalVersion.getSelectedItem();
+        if (coreModulesCheckBox.isSelected()) coreLevel=true;
+        if (contribModulesCheckBox.isSelected()) contribLevel=true;
+        if (customModulesCheckBox.isSelected()) customLevel=true;
+        configuration.SCAN_SOURCES=DrupalPlusConfiguration.getScanValue(coreLevel,contribLevel,customLevel);
     }
 
     @Override
