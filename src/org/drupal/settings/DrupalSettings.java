@@ -1,7 +1,10 @@
 package org.drupal.settings;
 
+import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
+import com.intellij.openapi.project.Project;
+import org.drupal.bundle.DrupalPlusBundle;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,12 +17,26 @@ import javax.swing.*;
  * @author Yaroslav Kharchenko
  */
 public class DrupalSettings implements Configurable {
+
+    private final Project project;
+
     private JPanel mainPanel;
+    private JComboBox cbDrupalVersion;
+    private JCheckBox coreModulesCheckBox;
+    private JCheckBox contribModulesCheckBox;
+    private JCheckBox customModulesCheckBox;
+
+    /**
+     * Invoked by reflection
+     */
+    public DrupalSettings(Project project) {
+        this.project = project;
+    }
 
     @Nls
     @Override
     public String getDisplayName() {
-        return "Drupal Plus Settings";
+        return DrupalPlusBundle.message("drupal.settings");
     }
 
     @Nullable
@@ -32,7 +49,7 @@ public class DrupalSettings implements Configurable {
     @Override
     public JComponent createComponent() {
 
-
+        cbDrupalVersion.addItem(DrupalPlusBundle.message("drupal.settings.version.drupal7"));
         return (JComponent) mainPanel;
     }
 
@@ -43,7 +60,6 @@ public class DrupalSettings implements Configurable {
 
     @Override
     public void apply() throws ConfigurationException {
-
     }
 
     @Override
