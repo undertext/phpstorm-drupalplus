@@ -2,6 +2,7 @@ package org.drupal.models;
 
 /**
  * Basic information about Drupal hook.
+ *
  * @author Yaroslav Kharchenko
  */
 public class Hook {

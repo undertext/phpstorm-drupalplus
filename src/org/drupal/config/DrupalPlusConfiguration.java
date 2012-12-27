@@ -10,6 +10,8 @@ import java.util.BitSet;
 
 
 /**
+ * Persistent state configuration for Drupal Settings tab.
+ *
  * @author Yaroslav Kharchenko
  */
 @State(
@@ -24,7 +26,8 @@ import java.util.BitSet;
 public class DrupalPlusConfiguration implements PersistentStateComponent<DrupalPlusConfiguration> {
 
     public String DRUPAL_VERSION = "Drupal 7";
-    public int SCAN_SOURCES = getScanValue(true,true,true);
+
+    public String SCAN_SOURCES = getScanValue(true, true, true);
 
     public static DrupalPlusConfiguration getInstance(final Project project) {
         return ServiceManager.getService(project, DrupalPlusConfiguration.class);
@@ -41,11 +44,26 @@ public class DrupalPlusConfiguration implements PersistentStateComponent<DrupalP
         XmlSerializerUtil.copyBean(drupalSettings, this);
     }
 
-    public static int getScanValue(boolean x, boolean y, boolean z){
-        int result=0;
-        if (x) result+=100;
-        if (y) result+=10;
-        if (z) result+=1;
+    /**
+     * Return unique string value for checkboxes states.
+     * Used for saving information about scanning settings.
+     *
+     * @param x is core chrckbox selected
+     * @param y is contrib checkbox selected
+     * @param z is custom checkbox selected
+     * @return unique string value for checkboxes states
+     */
+    public static String getScanValue(boolean x, boolean y, boolean z) {
+        String result = "";
+        if (x) result += "1";
+        else result += "0";
+
+        if (y) result += "1";
+        else result += "0";
+
+        if (z) result += "1";
+        else result += "0";
+
         return result;
     }
 }
