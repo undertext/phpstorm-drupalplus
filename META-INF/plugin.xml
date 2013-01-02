@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.yourcompany.unique.plugin.id</id>
     <depends>com.intellij.modules.platform</depends>
-
+    <depends>com.jetbrains.php</depends>
     <name>Drupal plugin</name>
     <version>1.0</version>
     <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
@@ -23,6 +23,8 @@
     <depends>com.intellij.modules.lang</depends>
     -->
 
+
+
     <application-components>
         <!-- Add your application components here -->
     </application-components>
@@ -37,6 +39,13 @@
 
     <extensions defaultExtensionNs="com.intellij">
 
-        <applicationConfigurable implementation="org.drupal.settings.DrupalSettings"/>
+        <projectConfigurable instance="org.drupal.settings.DrupalSettings"/>
+
+        <projectService serviceInterface="org.drupal.config.DrupalPlusConfiguration"
+                        serviceImplementation="org.drupal.config.DrupalPlusConfiguration"/>
+
+        <fileBasedIndex implementation="org.drupal.indexer.HookFileIndexer"/>
     </extensions>
+
+
 </idea-plugin>
